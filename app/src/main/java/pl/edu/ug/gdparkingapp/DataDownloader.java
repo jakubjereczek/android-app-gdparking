@@ -60,6 +60,9 @@ public class DataDownloader extends AsyncTask<String, Void, String[]> implements
             JSONObject jsonObject = null;
             try {
                 String crappyPrefix = "null";
+                if (data[i] == null) {
+                    data[i] = "";
+                }
                 if(data[i].startsWith(crappyPrefix)){
                     data[i] = data[i].substring(crappyPrefix.length(), data[i].length());
                 }

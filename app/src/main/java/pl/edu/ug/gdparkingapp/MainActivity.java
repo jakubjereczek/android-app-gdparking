@@ -5,6 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,18 +30,34 @@ public class MainActivity extends AppCompatActivity {
 
     public Parking parkingList;
 
+    private ProgressBar spinner;
+    private TextView errorMessage;
+    private Button exitButton;
+
     private boolean isLoading = true;
+    private boolean isError = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        spinner = findViewById(R.id.progressBar);
+        spinner.setVisibility(View.VISIBLE);
+        exitButton = findViewById(R.id.exitButton);
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                System.exit(0);
+            }
+        });
+        errorMessage = findViewById(R.id.errorMessage);
         fetchData();
     }
 
     private void fetchData() {
         String[] urls = new String[] {
-                "https://ckan2.multimediagdansk.pl/parkingLots",
+                "https://ckan2.multimediagdansk.pl/parkingLots22",
                 "https://ckan.multimediagdansk.pl/dataset/cb1e2708-aec1-4b21-9c8c-db2626ae31a6/resource/d361dff3-202b-402d-92a5-445d8ba6fd7f/download/parking-lots.json"
         };
         DataDownloader dataDownloader = new DataDownloader(new AsyncResponse() {
@@ -47,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFinish(JSONObject[] results) {
+
+                // results[0] => ParkingValues
+                JSONObject parkingValuesJSONObject = results[0];
                 // results[1] => ParkingName
                 JSONObject parkingNameJSONObject = results[1];
                 try {
@@ -67,13 +90,6 @@ public class MainActivity extends AppCompatActivity {
                         parkingNameList.add(parkingName);
                     }
 
-                } catch (JSONException jsonException) {
-                    jsonException.printStackTrace();
-                }
-
-                // results[0] => ParkingValues
-                JSONObject parkingValuesJSONObject = results[0];
-                try {
                     JSONArray parkingValuesJSONArray = parkingValuesJSONObject.getJSONArray("parkingLots");
                     for(int i=0;i<parkingValuesJSONArray.length();i++) {
                         JSONObject object=parkingValuesJSONArray.getJSONObject(i);
@@ -84,16 +100,23 @@ public class MainActivity extends AppCompatActivity {
                         Date lastUpdate = formatter.parse(object.getString("lastUpdate"));
                         ParkingValues parkingValues = new ParkingValues(parkingName, availableSpots, lastUpdate);
                         parkings.add(parkingValues);
-                        Log.i("XXX", "Name: "+parkingName.getName() + ", slotow: "+parkingValues.getAvailableSpots());
+                        //Log.i("XXX", "Name: "+parkingName.getName() + ", slotow: "+parkingValues.getAvailableSpots());
                     }
-                } catch (JSONException jsonException) {
-                    jsonException.printStackTrace();
-                } catch (ParseException e) {
+                } catch (Exception e) {
+                    isError = true;
                     e.printStackTrace();
                 }
+
+                if (isError) {
+                    errorMessage.setVisibility(View.VISIBLE);
+                    exitButton.setVisibility(View.VISIBLE);
+                }else{
+                    parkingList = new Parking(parkings);
+                    spinner.setVisibility(View.GONE);
+                    // Przejście do okna z listą
+                }
                 isLoading = false;
-                parkingList = new Parking(parkings);
-                Log.i("XXX", "Ilosć załadowanych parkingow: "+parkingList.getParking());
+
             }
         });
         dataDownloader.execute(urls);
