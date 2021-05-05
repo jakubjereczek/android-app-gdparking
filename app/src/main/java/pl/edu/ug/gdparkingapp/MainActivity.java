@@ -2,8 +2,10 @@ package pl.edu.ug.gdparkingapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
@@ -22,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import pl.edu.ug.gdparkingapp.activities.ParkingsListActivity;
 import pl.edu.ug.gdparkingapp.interfaces.AsyncResponse;
 import pl.edu.ug.gdparkingapp.models.ParkingName;
 import pl.edu.ug.gdparkingapp.models.ParkingValues;
@@ -57,13 +61,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void fetchData() {
         String[] urls = new String[] {
-                "https://ckan2.multimediagdansk.pl/parkingLots22",
+                "https://ckan2.multimediagdansk.pl/parkingLots",
                 "https://ckan.multimediagdansk.pl/dataset/cb1e2708-aec1-4b21-9c8c-db2626ae31a6/resource/d361dff3-202b-402d-92a5-445d8ba6fd7f/download/parking-lots.json"
         };
         DataDownloader dataDownloader = new DataDownloader(new AsyncResponse() {
 
-            private List<ParkingName> parkingNameList = new ArrayList<>();
-            private List<ParkingValues> parkings = new ArrayList<>();
+            private ArrayList<ParkingName> parkingNameList = new ArrayList<>();
+            private ArrayList<ParkingValues> parkings = new ArrayList<>();
 
             @Override
             public void onFinish(JSONObject[] results) {
@@ -83,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                         String address = object.getString("address");
                         String streetEntrance = object.getString("streetEntrance");
                         JSONObject locationObject = object.getJSONObject("location");
-                        Location location = new Location("Parking location");
+                        MyLocationSerializable location = new MyLocationSerializable();
                         location.setLatitude(Double.parseDouble(locationObject.getString("latitude")));
                         location.setLongitude(Double.parseDouble(locationObject.getString("longitude")));
                         ParkingName parkingName = new ParkingName(id, name, shortName, address, streetEntrance, location);
@@ -100,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
                         Date lastUpdate = formatter.parse(object.getString("lastUpdate"));
                         ParkingValues parkingValues = new ParkingValues(parkingName, availableSpots, lastUpdate);
                         parkings.add(parkingValues);
-                        //Log.i("XXX", "Name: "+parkingName.getName() + ", slotow: "+parkingValues.getAvailableSpots());
                     }
                 } catch (Exception e) {
                     isError = true;
@@ -113,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     parkingList = new Parking(parkings);
                     spinner.setVisibility(View.GONE);
-                    // Przejście do okna z listą
+                    startParkingListActivity();
                 }
                 isLoading = false;
 
@@ -121,5 +124,12 @@ public class MainActivity extends AppCompatActivity {
         });
         dataDownloader.execute(urls);
     }
+
+    private void startParkingListActivity() {
+        Intent intent = new Intent(MainActivity.this, ParkingsListActivity.class);
+        intent.putExtra("parking", (Serializable) parkingList);
+        startActivity(intent);
+    }
+
 }
 

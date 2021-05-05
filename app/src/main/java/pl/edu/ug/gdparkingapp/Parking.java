@@ -1,21 +1,26 @@
 package pl.edu.ug.gdparkingapp;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import pl.edu.ug.gdparkingapp.models.ParkingValues;
 
-public class Parking {
+public class Parking implements Serializable {
     private ParkingValues parking;
     private List<ParkingValues> parkings = new ArrayList<>();
     private int currentParkingId = 0;
 
-    public Parking(List<ParkingValues> parkings) {
+    public Parking(ArrayList<ParkingValues> parkings) {
         this.parkings = parkings;
     }
 
     public ParkingValues getParking() {
         return parkings.get(currentParkingId);
+    }
+
+    public List<ParkingValues> getParkingsList() {
+        return this.parkings;
     }
 
     public ParkingValues next() {
@@ -33,5 +38,6 @@ public class Parking {
         }
         return getParking();
     }
+    //TODO: Slider zrobić przy elemencie!
 }
 

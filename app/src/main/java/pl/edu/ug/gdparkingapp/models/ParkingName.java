@@ -2,19 +2,23 @@ package pl.edu.ug.gdparkingapp.models;
 
 import android.location.Location;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ParkingName {
+import pl.edu.ug.gdparkingapp.MyLocation;
+import pl.edu.ug.gdparkingapp.MyLocationSerializable;
+
+public class ParkingName implements Serializable {
 
     private int id;
     private String name;
     private String shortName;
     private String address;
     private String streetEntrance;
-    private Location location;
+    private MyLocationSerializable location;
 
 
-    public ParkingName(int id, String name, String shortName, String address, String streetEntrance, Location location) {
+    public ParkingName(int id, String name, String shortName, String address, String streetEntrance, MyLocationSerializable location) {
         this.id = id;
         this.name = name;
         this.shortName = shortName;
@@ -63,11 +67,11 @@ public class ParkingName {
         this.streetEntrance = streetEntrance;
     }
 
-    public Location getLocation() {
+    public MyLocationSerializable getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(MyLocationSerializable location) {
         this.location = location;
     }
 

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/info_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="10dp"
+        android:layout_marginRight="5dip">
+
+        <ImageView
+            android:id="@+id/info_image"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:src="@drawable/car_icon" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/info_name"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/info_box"
+        android:layout_toRightOf="@+id/info_box"
+        android:text="TextView"
+        android:textColor="@color/secondary_dark"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/info_address"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/info_name"
+        android:layout_toRightOf="@+id/info_box"
+        android:text="TextView"
+        android:textColor="@color/primary_dark"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/info_availableSpots"
+        android:layout_width="220dp"
+        android:layout_height="20dp"
+        android:layout_below="@id/info_address"
+        android:layout_marginBottom="15dp"
+        android:layout_toRightOf="@+id/info_box"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/info_lastUpdate"
+        android:layout_width="107dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="230dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toEndOf="@+id/info_availableSpots"
+        android:layout_toRightOf="@+id/info_box"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
+
+</RelativeLayout>

@@ -1,8 +1,9 @@
 package pl.edu.ug.gdparkingapp.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ParkingValues {
+public class ParkingValues implements Serializable{
 
     private ParkingName parkingName;
     private int availableSpots;
