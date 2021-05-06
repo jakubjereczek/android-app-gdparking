@@ -44,26 +44,24 @@
     <TextView
         android:id="@+id/info_availableSpots"
         android:layout_width="220dp"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/info_address"
+        android:layout_toRightOf="@+id/info_box"
+        android:text="TextView"
+        android:textColor="@color/primary_dark"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/info_lastUpdate"
+        android:layout_width="220dp"
+        android:layout_height="20dp"
+        android:layout_below="@id/info_availableSpots"
         android:layout_marginBottom="15dp"
         android:layout_toRightOf="@+id/info_box"
         android:text="TextView"
         android:textColor="@color/black"
         android:textSize="12sp" />
 
-    <TextView
-        android:id="@+id/info_lastUpdate"
-        android:layout_width="107dp"
-        android:layout_height="72dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="230dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_toEndOf="@+id/info_availableSpots"
-        android:layout_toRightOf="@+id/info_box"
-        android:text="TextView"
-        android:textColor="@color/black"
-        android:textSize="12sp" />
 
 </RelativeLayout>

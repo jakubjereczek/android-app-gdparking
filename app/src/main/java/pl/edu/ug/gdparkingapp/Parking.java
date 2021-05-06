@@ -1,5 +1,7 @@
 package pl.edu.ug.gdparkingapp;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,21 +25,34 @@ public class Parking implements Serializable {
         return this.parkings;
     }
 
-    public ParkingValues next() {
-        currentParkingId++;
-        if (currentParkingId > parkings.size() - 1) {
-            currentParkingId = 0;
+    // Metodę używam w przypadku gdy wchodzę z listy parkingów i ustawiam ID elementu od którego należy zaczać przewijanie.
+    public void setCurrent(ParkingValues parkingValues) {
+        for (int i=0; i<parkings.size(); i++) {
+            if (parkingValues.getParkingName().getId() == parkings.get(i).getParkingName().getId()) {
+                currentParkingId = i;
+                return;
+            }
         }
-        return getParking();
     }
 
-    public ParkingValues prev() {
-        currentParkingId--;
-        if (currentParkingId < 0) {
-            currentParkingId = parkings.size() - 1;
-        }
-        return getParking();
+    public int getCurrentParkingId() {
+        return currentParkingId;
     }
-    //TODO: Slider zrobić przy elemencie!
+
+//    public ParkingValues next() {
+//        currentParkingId++;
+//        if (currentParkingId > parkings.size() - 1) {
+//            currentParkingId = 0;
+//        }
+//        return getParking();
+//    }
+//
+//    public ParkingValues prev() {
+//        currentParkingId--;
+//        if (currentParkingId < 0) {
+//            currentParkingId = parkings.size() - 1;
+//        }
+//        return getParking();
+//    }
 }
 

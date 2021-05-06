@@ -30,7 +30,6 @@ public class ParkingsListActivity extends AppCompatActivity {
     Parking parking;
     ArrayList<ParkingValues> parkingList;
 
-
     private ListView listView;
 
     @Override
@@ -48,7 +47,7 @@ public class ParkingsListActivity extends AppCompatActivity {
         parking = (Parking) getIntent().getSerializableExtra("parking");
         parkingList = (ArrayList<ParkingValues>) parking.getParkingsList();
 
-        ListParkingAdapter listParkingAdapter = new ListParkingAdapter(this,0, parkingList);
+        ListParkingAdapter listParkingAdapter = new ListParkingAdapter(this,0, parking);
         listView.setAdapter(listParkingAdapter);
     }
 }

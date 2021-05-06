@@ -1,7 +1,7 @@
 package pl.edu.ug.gdparkingapp;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,21 +11,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
+import pl.edu.ug.gdparkingapp.activities.ParkingSliderActivity;
 import pl.edu.ug.gdparkingapp.models.ParkingValues;
 
 public class ListParkingAdapter extends ArrayAdapter<ParkingValues> {
 
+    private Parking parking;
     private ArrayList<ParkingValues> parkings;
     Context context;
 
-    public ListParkingAdapter(@NonNull Context context, int resource, @NonNull List<ParkingValues> objects) {
-        super(context, resource, objects);
-        this.parkings = (ArrayList<ParkingValues>) objects;
+    public ListParkingAdapter(@NonNull Context context, int resource, @NonNull Parking parking) {
+        super(context, resource, parking.getParkingsList());
+        this.parking = parking;
+        this.parkings = (ArrayList<ParkingValues>) parking.getParkingsList();
         this.context = context;
     }
 
@@ -44,7 +47,6 @@ public class ListParkingAdapter extends ArrayAdapter<ParkingValues> {
         }
 
         ParkingValues current = getItem(position);
-
         TextView info_name = listItem.findViewById(R.id.info_name);
         info_name.setText(current.getParkingName().getName());
         TextView info_address = listItem.findViewById(R.id.info_address);
@@ -55,15 +57,16 @@ public class ListParkingAdapter extends ArrayAdapter<ParkingValues> {
         String date = simpleDateFormat.format(current.getLastUpdate());
         info_availableSpots.setText("Wolnych miejsc parkingowych: " + current.getAvailableSpots());
         TextView info_lastUpdate = listItem.findViewById(R.id.info_lastUpdate);
-        info_lastUpdate.setText("Zaaktualizowano: " + date);
-
+        info_lastUpdate.setText("Ostatnia aktualizacja: " + date);
 
         listItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                // TODO: Widok z details. Z sliderem wykrzystujcym parking - next, prev.
-                Log.i("XXX", "Przechodzę do details");
+                Intent intent = new Intent(context, ParkingSliderActivity.class);
+                intent.putExtra("parking", (Serializable) parking);
+                intent.putExtra("currentParkingValues", (Serializable) current);
+                context.startActivity(intent);
             }
         });
 
