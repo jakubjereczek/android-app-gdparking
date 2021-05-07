@@ -36,11 +36,7 @@ public class ParkingsListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parkings_list);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
 
-        toolBarLayout.setTitle("Miejsca parkingowe");
         listView = findViewById(R.id.listView);
         ViewCompat.setNestedScrollingEnabled(listView, true);
 

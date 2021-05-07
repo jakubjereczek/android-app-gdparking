@@ -57,7 +57,7 @@ public class ListParkingAdapter extends ArrayAdapter<ParkingValues> {
         String date = simpleDateFormat.format(current.getLastUpdate());
         info_availableSpots.setText("Wolnych miejsc parkingowych: " + current.getAvailableSpots());
         TextView info_lastUpdate = listItem.findViewById(R.id.info_lastUpdate);
-        info_lastUpdate.setText("Ostatnia aktualizacja: " + date);
+        info_lastUpdate.setText( "("+date+")");
 
         listItem.setOnClickListener(new View.OnClickListener() {
             @Override

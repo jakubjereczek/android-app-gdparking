@@ -10,20 +10,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:layout_marginRight="5dip">
 
         <ImageView
             android:id="@+id/info_image"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
-            android:src="@drawable/car_icon" />
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/parking_icon" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/info_name"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
+        android:layout_width="325dp"
+        android:layout_height="25dp"
         android:layout_alignTop="@+id/info_box"
         android:layout_toRightOf="@+id/info_box"
         android:text="TextView"
@@ -32,34 +32,40 @@
 
     <TextView
         android:id="@+id/info_address"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
+        android:layout_width="325dp"
+        android:layout_height="15dp"
         android:layout_below="@id/info_name"
         android:layout_toRightOf="@+id/info_box"
         android:text="TextView"
-        android:textColor="@color/primary_dark"
+        android:textColor="@color/black"
         android:textSize="12sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/info_availableSpots"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
+        android:layout_width="208dp"
+        android:layout_height="16dp"
         android:layout_below="@id/info_address"
+        android:layout_marginTop="3dp"
         android:layout_toRightOf="@+id/info_box"
         android:text="TextView"
-        android:textColor="@color/primary_dark"
+        android:textColor="@color/black"
         android:textSize="12sp"
-        android:textStyle="bold" />
+        android:textStyle="normal" />
 
     <TextView
         android:id="@+id/info_lastUpdate"
-        android:layout_width="220dp"
-        android:layout_height="20dp"
-        android:layout_below="@id/info_availableSpots"
-        android:layout_marginBottom="15dp"
+        android:layout_width="105dp"
+        android:layout_height="16dp"
+        android:layout_alignTop="@+id/info_availableSpots"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="213dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="5dp"
+        android:layout_toEndOf="@+id/info_availableSpots"
         android:layout_toRightOf="@+id/info_box"
         android:text="TextView"
+        android:textAlignment="textEnd"
         android:textColor="@color/black"
         android:textSize="12sp" />
 

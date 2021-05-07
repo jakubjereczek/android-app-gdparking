@@ -1,31 +1,27 @@
-package pl.edu.ug.gdparkingapp;
+package pl.edu.ug.gdparkingapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
-import pl.edu.ug.gdparkingapp.activities.ParkingsListActivity;
+import pl.edu.ug.gdparkingapp.DataDownloader;
+import pl.edu.ug.gdparkingapp.MyLocationSerializable;
+import pl.edu.ug.gdparkingapp.Parking;
+import pl.edu.ug.gdparkingapp.R;
 import pl.edu.ug.gdparkingapp.interfaces.AsyncResponse;
 import pl.edu.ug.gdparkingapp.models.ParkingName;
 import pl.edu.ug.gdparkingapp.models.ParkingValues;
@@ -37,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar spinner;
     private TextView errorMessage;
     private Button exitButton;
+    private Button reloadButton;
+    private Button parkingsListButton;
+
 
     private boolean isLoading = true;
     private boolean isError = false;
@@ -53,6 +52,20 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 finish();
                 System.exit(0);
+            }
+        });
+        reloadButton = findViewById(R.id.reloadButton);
+        reloadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            }
+        });
+        parkingsListButton = findViewById(R.id.parkingsListButton);
+        parkingsListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startParkingListActivity();
             }
         });
         errorMessage = findViewById(R.id.errorMessage);
@@ -113,9 +126,12 @@ public class MainActivity extends AppCompatActivity {
                 if (isError) {
                     errorMessage.setVisibility(View.VISIBLE);
                     exitButton.setVisibility(View.VISIBLE);
+                    reloadButton.setVisibility(View.VISIBLE);
+                    parkingsListButton.setVisibility(View.INVISIBLE);
                 }else{
                     parkingList = new Parking(parkings);
                     spinner.setVisibility(View.GONE);
+                    parkingsListButton.setVisibility(View.VISIBLE);
                     startParkingListActivity();
                 }
                 isLoading = false;
